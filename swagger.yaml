@@ -1,0 +1,475 @@
+openapi: 3.0.4
+info:
+  title: Blog API test project
+  description: Swagger for Blog API test project
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/api
+tags:
+  - name: post
+    description: Operations about posts
+  - name: comment
+    description: Operaions about comments
+  - name: user
+    description: Operations about user
+paths:
+  /posts:
+    get:
+      tags:
+        - post
+      summary: Get all posts
+      description: Get all posts from posts table
+      operationId: getAllPosts
+      responses:
+        '200':
+          description: Successful operation
+          content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Post'          
+        '500':
+          description: 'Internal server error'
+    post:
+      tags:
+        - post
+      summary: Create new post
+      description: Add a new post
+      operationId: createPost
+      requestBody:
+        description: Create a new post
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdatePost'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '401':
+          description: Non-authenticated user
+        '422':
+          description: Validation exception
+        '500':
+          description: Internal server error
+      security:
+        - SanctumBearer: []        
+        
+  /posts/{post}:        
+    put:
+      tags:
+        - post
+      summary: Update post
+      description: Update post
+      operationId: updatePost
+      parameters:
+        - in: path
+          name: post
+          required: true
+          description: Post id
+          schema:
+            type: integer
+
+      requestBody:
+        description: Update post
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdatePost'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '401':
+          description: Non-authenticated user
+        '403':
+          description: Non-authorised user
+        '422':
+          description: Validation exception
+        '500':
+          description: Internal server error
+      security:
+        - SanctumBearer: []        
+        
+    delete:
+      tags:
+        - post
+      summary: Delete post
+      description: Delete post
+      operationId: deletePost
+      parameters:
+        - in: path
+          name: post
+          required: true
+          description: Post id
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+        '401':
+          description: Non-authenticated user
+        '403':
+          description: Non-authorised user
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error          
+      security:
+        - SanctumBearer: []        
+        
+        
+  /posts/{post}/comments:
+    get:
+      tags:
+        - comment
+      summary: Get all comments for the post
+      description: Get all comments for a given post
+      operationId: getAllCommentsForAPost
+      
+      parameters:
+        - in: path
+          name: post
+          required: true
+          description: Post id
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: Successful operation
+          content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Comment'          
+        '404':
+          description: Post not found
+        '500':
+          description: Internal server error          
+
+    
+    post:
+      tags:
+        - comment
+      summary: Create new comment
+      description: Add a new comment
+      operationId: createComment
+      parameters:
+        - in: path
+          name: post
+          required: true
+          description: Post id
+          schema:
+            type: integer
+      
+      requestBody:
+        description: Create a new comment
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateComment'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '401':
+          description: Non-authenticated user
+        '403':
+          description: Non-authorised user
+        '404':
+          description: Not found error
+        '422':
+          description: Validation exception
+        '500':
+          description: Internal server error          
+
+      security:
+        - SanctumBearer: []        
+        
+  /posts/{post}/comments/{comment}:        
+    put:
+      tags:
+        - comment
+      summary: Update comment
+      description: Update comment
+      operationId: updateComment
+      parameters:
+        - in: path
+          name: post
+          required: true
+          description: Post id
+          schema:
+            type: integer
+        - in: path
+          name: comment
+          required: true
+          description: Comment id
+          schema:
+            type: integer
+
+
+      requestBody:
+        description: Create a new comment
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateComment'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '401':
+          description: Non-authenticated user
+        '403':
+          description: Non-authorised user
+        '404':
+          description: Not found error
+        '422':
+          description: Validation exception
+        '500':
+          description: Internal server error          
+          
+      security:
+        - SanctumBearer: []        
+        
+    delete:
+      tags:
+        - comment
+      summary: Delete comment
+      description: Delete comment
+      operationId: deleteComment
+      parameters:
+        - in: path
+          name: post
+          required: true
+          description: Post id
+          schema:
+            type: integer
+        - in: path
+          name: comment
+          required: true
+          description: Comment id
+          schema:
+            type: integer
+            
+      responses:
+        '200':
+          description: Successful operation
+        '401':
+          description: Non-authenticated user
+        '403':
+          description: Non-authorised user
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error          
+      security:
+        - SanctumBearer: []        
+
+        
+  /register:
+    post:
+      tags:
+        - user
+      summary: Register a new user
+      description: Register a new user
+      operationId: registerUser
+      requestBody:
+        description: Register a new user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '422':
+          description: Validation exception
+        '500':
+          description: Internal server error          
+
+  /login:
+    post:
+      tags:
+        - user
+      summary: Logs user into the system.
+      description: Log into the system.
+      operationId: loginUser
+      requestBody:
+        description: Login user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token: 
+                    type: string
+                    example: '796234juy234uy2iuy34i2'
+        '422':
+          description: Invalid username/password supplied
+        '500':
+          description: Internal server error          
+
+components:
+  schemas:
+    Post:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        user_id:
+          type: integer
+          format: int64
+          example: 198772
+        title:
+          type: string
+          example: 'Post title'
+        body:
+          type: string
+          example: 'Some body of the post'  
+        created_at:
+          type: string
+          example: '2025-06-25T16:25:26.000000Z'  
+        updated_at:
+          type: string
+          example: '2025-06-25T16:25:26.000000Z'  
+
+    CreateUpdatePost:
+      type: object
+      properties:
+        title:
+          type: string
+          example: 'Post title'
+        body:
+          type: string
+          example: 'Some body of the post'  
+          
+    CreateUpdateComment:
+      type: object
+      properties:
+        body:
+          type: string
+          description: 'Comment body'
+          example: 'Some body of the post'  
+
+
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        body:
+          type: string
+          example: 'Comment body'
+        user_id:
+          type: integer
+          format: int64
+          example: 198772
+        post_id:
+          type: integer
+          format: int64
+          example: 198772
+        created_at:
+          type: string
+          example: '2025-06-25T16:25:26.000000Z'  
+        updated_at:
+          type: string
+          example: '2025-06-25T16:25:26.000000Z'  
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        name:
+          type: string
+          example: theUser
+        email:
+          type: string
+          example: john@email.com
+        password:
+          type: string
+          example: '12345'
+        created_at:
+          type: string
+          example: '2025-06-25T16:25:26.000000Z'  
+        updated_at:
+          type: string
+          example: '2025-06-25T16:25:26.000000Z'  
+
+    Register:
+      type: object
+      properties:
+        name:
+          type: string
+          example: 'John Doe'
+        email:
+          type: string
+          example: john@email.com
+        password:
+          description: Password lentgh must be 6 and more chars
+          type: string
+          example: '123456'
+          
+
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+          example: john@email.com
+        password:
+          description: Password lentgh must be 6 and more chars
+          type: string
+          example: '123456'
+          
+  securitySchemes:
+    SanctumBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: Sanctum
+
+security:
+  - SanctumBearer: []
