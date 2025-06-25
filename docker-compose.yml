@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: blog_nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./:/var/www/  
+    networks:
+      - default
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+    image: blog_app_image  
+    container_name: blog_app
+    volumes:
+      - ./:/var/www/
+      - ./docker/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+      - ./docker/app/php.ini:/usr/local/etc/php/conf.d/custom-php.ini
+    ports:
+      - "9000:9000"
+    networks:
+      - default
+
+  mysql:
+    image: mysql:8.0
+    container_name: blog_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+    ports:
+      - "3306:3306"
+    volumes:
+      - blog_mysql_data:/var/lib/mysql      
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro      
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  blog_mysql_data:
+    
+
+
+    
