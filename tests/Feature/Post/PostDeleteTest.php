@@ -38,7 +38,7 @@ class PostDeleteTest extends TestCase
 
         $this->actingAs($this->user)
             ->deleteJson($route)
-            ->assertExactJson(['message' => 'Operation complete successfully.'])
+            ->assertExactJson(['message' => __('statuses.ok')])
             ->assertStatus(200);
     }
 

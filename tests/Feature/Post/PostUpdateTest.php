@@ -43,7 +43,7 @@ class PostUpdateTest extends TestCase
 
         $this->actingAs($this->user)
             ->putJson($route, $data)
-            ->assertExactJson(['message' => 'Operation complete successfully.'])
+            ->assertExactJson(['message' => __('statuses.ok')])
             ->assertStatus(200);
     }
 

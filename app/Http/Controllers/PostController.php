@@ -68,7 +68,7 @@ class PostController extends Controller
         $validated = $request->validated();
         $post->updateOrFail($validated);
 
-        return response()->json(['message' => 'Operation complete successfully.']);
+        return response()->json(['message' => __('statuses.ok')]);
     }
 
     /**
@@ -84,6 +84,6 @@ class PostController extends Controller
 
         $post->deleteOrFail();
 
-        return response()->json(['message' => 'Operation complete successfully.']);
+        return response()->json(['message' => __('statuses.ok')]);
     }
 }
