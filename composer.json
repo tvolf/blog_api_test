@@ -1,9 +1,9 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "tvolf/blog-api-test",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "Blog API Test",
+    "keywords": ["laravel", "blog", "api", "test"],
     "license": "MIT",
     "require": {
         "php": "^8.2",
