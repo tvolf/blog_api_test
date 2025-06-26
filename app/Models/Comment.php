@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/** @mixin Eloquent */
 class Comment extends Model
 {
     /** @use HasFactory<\Database\Factories\CommentFactory> */
