@@ -16,6 +16,9 @@ After this site will be available on http://localhost:8000
 To run tests use the following line from `app` container:
    - php artisan test
     
+or for parallel testing mode:
+   - php artisan test -p 
+    
 
 
 	
