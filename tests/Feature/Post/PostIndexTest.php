@@ -3,13 +3,13 @@
 namespace Feature\Post;
 
 use App\Models\Post;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class PostIndexTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     #[Test]
     public function show_all_posts_successfully(): void

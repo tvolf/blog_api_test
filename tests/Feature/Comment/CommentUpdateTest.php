@@ -5,13 +5,13 @@ namespace Feature\Comment;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class CommentUpdateTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     private User $user;
     private Post $post;

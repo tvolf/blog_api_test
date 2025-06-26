@@ -4,13 +4,13 @@ namespace Feature\Post;
 
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class PostUpdateTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     private User $user;
     private Post $post;

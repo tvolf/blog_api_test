@@ -4,13 +4,13 @@ namespace Feature\Comment;
 
 use App\Models\Comment;
 use App\Models\Post;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class CommentIndexTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
 
     private Post $post;
